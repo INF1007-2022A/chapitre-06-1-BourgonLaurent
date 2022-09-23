@@ -77,14 +77,53 @@ def frequence(sentence: str) -> dict:
     return letter_count
 
 
-def get_recipes():
-    # TODO: Demander le nom d'une recette, puis ses ingredients et enregistrer dans une structure de données
-    pass
+def get_recipe() -> tuple[str, list[str]]:
+    name = input("Nom de la recette : ")
+    ingredients: list[str] = []
+    while True:
+        if ingredients:
+            print("Les ingrédients actuels sont : " + ", ".join(ingredients))
+            choice = input("Souhaitez-vous ajouter un autre ingrédient? (O)ui/(N)on ")
+            if choice.lower() == "n":
+                break
+        else:
+            print("La liste d'ingrédients est vide")
+
+        ingredients.append(input("Nom de l'ingrédient : "))
+
+    return name, ingredients
 
 
-def print_recipe(ingredients) -> None:
-    # TODO: Demander le nom d'une recette, puis l'afficher si elle existe
-    pass
+def get_recipes() -> dict[str, list[str]]:
+    recipes = {}
+    while True:
+        if recipes:
+            print("Les recettes enregistrées sont : " + ", ".join(recipes.keys()))
+            choice = input("Souhaitez-vous ajouter une autre recette? (O)ui/(N)on ")
+            if choice.lower() == "n":
+                break
+
+        name, ingredients = get_recipe()
+        recipes[name] = ingredients
+
+    return recipes
+
+
+def print_recipe(recipes: dict[str, list[str]]):
+    while True:
+        recipe = input("Quelle recette souhaitez-vous afficher? ")
+
+        if recipe in recipes.keys():
+            break
+        else:
+            print("Cette recette n'existe pas dans la base de donnée")
+            print(
+                "Veuillez choisir une des options suivantes :\n"
+                + "\n".join([f"\t- {n}" for n in recipes.keys()])
+            )
+
+    print(f"Les ingrédients de {recipe} sont :")
+    print("\n".join([f"\t- {ing}" for ing in recipes[recipe]]))
 
 
 def main() -> None:
