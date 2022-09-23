@@ -59,10 +59,22 @@ def best_grades(student_grades: dict[str, list[float]]) -> dict[str, float]:
 
 
 def frequence(sentence: str) -> dict:
-    # TODO: Afficher les lettres les plus fréquentes
-    #       Retourner le tableau de lettres
+    letter_count: dict[str, int] = {}
+    for char in sentence:
+        letter_count[char] = letter_count.get(char, 0) + 1
 
-    return {}
+    # Reverse sort by value
+    sorted_count: list[tuple[str, int]] = sorted(
+        letter_count.items(),
+        key=lambda x: x[1],
+        reverse=True,
+    )
+
+    for char, freq in sorted_count:
+        if freq >= 5:
+            print(f"{char}: {freq}")
+
+    return letter_count
 
 
 def get_recipes():
@@ -94,7 +106,7 @@ def main() -> None:
     sentence = (
         "bonjour, je suis une phrase. je suis compose de beaucoup de lettre. oui oui"
     )
-    frequence(sentence)
+    print(frequence(sentence))
 
     print("On enregistre les recettes...")
     recipes = get_recipes()
