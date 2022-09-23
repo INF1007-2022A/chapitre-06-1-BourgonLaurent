@@ -26,12 +26,22 @@ def order(values: list[str | float] = None) -> list:
     return values
 
 
-def anagrams(words: list = None) -> bool:
+def anagrams(words: list[str] = None) -> bool:
     if words is None:
-        # TODO: demander les mots ici
-        pass
+        words = []
+        while (curr_len := len(words)) < 2:
+            words.append(input(f"Entrez un mot #{curr_len + 1} à comparer : "))
 
-    return False
+    letter_counts: list[dict[str, int]] = []
+
+    for word in words:
+        l_count = {}
+        for char in word:
+            l_count[char] = l_count.get(char, 0) + 1
+
+        letter_counts.append(l_count)
+
+    return letter_counts[0] == letter_counts[1]
 
 
 def contains_doubles(items: list) -> bool:
