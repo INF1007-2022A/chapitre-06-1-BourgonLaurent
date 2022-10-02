@@ -77,14 +77,17 @@ def frequence(sentence: str) -> dict:
     return letter_count
 
 
+def ask_stop() -> bool:
+    return input("Souhaitez-vous continuer? (O)ui/(N)on ").lower() == "n"
+
+
 def get_recipe() -> tuple[str, list[str]]:
     name = input("Nom de la recette : ")
     ingredients: list[str] = []
     while True:
         if ingredients:
             print("Les ingrédients actuels sont : " + ", ".join(ingredients))
-            choice = input("Souhaitez-vous ajouter un autre ingrédient? (O)ui/(N)on ")
-            if choice.lower() == "n":
+            if ask_stop():
                 break
         else:
             print("La liste d'ingrédients est vide")
@@ -99,8 +102,7 @@ def get_recipes() -> dict[str, list[str]]:
     while True:
         if recipes:
             print("Les recettes enregistrées sont : " + ", ".join(recipes.keys()))
-            choice = input("Souhaitez-vous ajouter une autre recette? (O)ui/(N)on ")
-            if choice.lower() == "n":
+            if ask_stop():
                 break
 
         name, ingredients = get_recipe()
